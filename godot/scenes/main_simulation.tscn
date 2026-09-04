@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2k8y1m7p4n3q"]
+
+[ext_resource type="Script" path="res://scripts/resqnet_client.gd" id="1_client"]
+[ext_resource type="Script" path="res://scripts/drone_controller.gd" id="2_drone"]
+
+[sub_resource type="Environment" id="Environment_1"]
+background_mode = 1
+background_color = Color(0.08, 0.10, 0.14, 1.0)
+ambient_light_source = 2
+ambient_light_color = Color(0.4, 0.45, 0.5, 1.0)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(400, 400)
+
+[sub_resource type="StandardMaterial3D" id="Mat_ground"]
+albedo_color = Color(0.12, 0.14, 0.18, 1.0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_drone"]
+size = Vector3(1.2, 0.4, 1.2)
+
+[sub_resource type="StandardMaterial3D" id="Mat_drone_scout"]
+albedo_color = Color(0.2, 0.6, 1.0, 1.0)
+
+[sub_resource type="StandardMaterial3D" id="Mat_drone_med"]
+albedo_color = Color(0.1, 0.9, 0.4, 1.0)
+
+[node name="MainSimulation" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866, -0.353, 0.353, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 50, 0)
+light_color = Color(0.95, 0.95, 1.0, 1.0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866, 0, -0.866, 0.5, 0, 80, 120)
+
+[node name="ResQNetClient" type="Node" parent="."]
+script = ExtResource("1_client")
+
+[node name="CityGrid" type="Node3D" parent="."]
+
+[node name="Ground" type="MeshInstance3D" parent="CityGrid"]
+mesh = SubResource("PlaneMesh_ground")
+surface_material_override/0 = SubResource("Mat_ground")
+
+[node name="Drones" type="Node3D" parent="."]
+
+[node name="DRONE-S01" type="Node3D" parent="Drones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -5)
+script = ExtResource("2_drone")
+drone_id = "DRONE-S01"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Drones/DRONE-S01"]
+mesh = SubResource("BoxMesh_drone")
+surface_material_override/0 = SubResource("Mat_drone_scout")
+
+[node name="DRONE-M01" type="Node3D" parent="Drones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+script = ExtResource("2_drone")
+drone_id = "DRONE-M01"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Drones/DRONE-M01"]
+mesh = SubResource("BoxMesh_drone")
+surface_material_override/0 = SubResource("Mat_drone_med")
+
+[node name="DRONE-H01" type="Node3D" parent="Drones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, -5)
+script = ExtResource("2_drone")
+drone_id = "DRONE-H01"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Drones/DRONE-H01"]
+mesh = SubResource("BoxMesh_drone")
+
+[node name="DRONE-S02" type="Node3D" parent="Drones"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, -5)
+script = ExtResource("2_drone")
+drone_id = "DRONE-S02"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Drones/DRONE-S02"]
+mesh = SubResource("BoxMesh_drone")
+surface_material_override/0 = SubResource("Mat_drone_scout")

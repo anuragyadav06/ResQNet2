@@ -1,0 +1,25 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; but since it is all text-based, you can also edit it.
+
+config_version=5
+
+[application]
+
+config/name="ResQNet System B - Digital Twin"
+config/description="Autonomous Disaster Response Physics Simulation for ResQNet Platform"
+run/main_scene="res://scenes/main_simulation.tscn"
+config/features=PackedStringArray("4.0", "Forward Plus")
+config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=0
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=2
+textures/vram_compression/import_etc2_astc=true
